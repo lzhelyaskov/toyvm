@@ -1,11 +1,10 @@
-use crate::{opcode::*, VM};
+use crate::{VM, opcode::*};
 
-const MEMSIZE: usize = 0x4000; 
+const MEMSIZE: usize = 0x4000;
 const PSTACK: usize = 0x2000;
 const RSTACK: usize = 0x3FFC; // 0x4000 - 4;
 
 fn create_vm() -> VM {
-
     let memory = vec![0; MEMSIZE];
     let functions = Vec::new();
     let mut vm = VM::new(memory, functions, 0, 4);
@@ -42,7 +41,6 @@ fn test_memory() {
 
     vm.read(16, &mut dst);
 
-
     for (i, byte) in bytes.iter().enumerate() {
         assert_eq!(*byte, dst[i]);
     }
@@ -61,31 +59,30 @@ fn test_memory() {
 
 #[test]
 fn test_calls() {
-
     let mut vm = create_vm();
 
     let program = [
-        I32_CONST,      // 16
+        I32_CONST, // 16
         26, 0, 0, 0,    // 17 - 20
-        CALL,           // 21
-        END,            // 22
-// fn square
-        DUP,            // 23
-        MUL,            // 24
-        RETURN,         // 25
-// fn quad
-        CALLI,          // 26
-        23, 0, 0, 0,    // 27 - 30
-        CALLI,          // 31
-        23, 0, 0, 0,    // 32 - 35
-        RETURN          // 36
+        CALL, // 21
+        END,  // 22
+        // fn square
+        DUP,    // 23
+        MUL,    // 24
+        RETURN, // 25
+        // fn quad
+        CALLI, // 26
+        23, 0, 0, 0,     // 27 - 30
+        CALLI, // 31
+        23, 0, 0, 0,      // 32 - 35
+        RETURN, // 36
     ];
 
     vm.write(16, &program);
     vm.push_i32(2);
     let mut ip = 16;
     // vm.run(&mut ip).unwrap();
-    
+
     assert!(vm.run(&mut ip).is_ok());
 
     let result = vm.pop_i32();
