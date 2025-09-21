@@ -7,15 +7,20 @@ op_code!(UNREACHABLE, 0x00);
 op_code!(NOP, 0x01);
 // 0x02 - 0x0A reserved
 op_code!(END, 0x0b);
-op_code!(BR, 0x0c);
-op_code!(BRZ, 0x0d);
-op_code!(JMP, 0x0e);
-op_code!(JZ, 0x0f);
+op_code!(BRI, 0x0c);
+op_code!(BRZI, 0x0d);
+op_code!(BR, 0x0e);
+op_code!(BRZ, 0x0f);
 op_code!(RETURN, 0x10);
 op_code!(CALL_VM, 0x11);
 op_code!(CALL, 0x12);
 op_code!(CALLI, 0x13);
-// 0x14 - 0x19 reserved
+
+op_code!(JMP, 0x14);
+op_code!(JMPI, 0x15);
+op_code!(JZ, 0x16);
+op_code!(JZI, 0x17);
+// 0x17 - 0x19 reserved
 op_code!(DROP, 0x1a);
 op_code!(DUP, 0x1b);
 op_code!(SWAP, 0x1c);
@@ -99,10 +104,10 @@ pub fn opcode(op: u8) -> &'static str {
         UNREACHABLE => "unreachable",
         NOP => "nop",
         END => "end",
+        BRI => "bri",
+        BRZI => "briz",
         BR => "br",
         BRZ => "brz",
-        JMP => "jmp",
-        JZ => "jz",
         RETURN => "return",
         CALL_VM => "call_vm",
         CALL => "call",
@@ -111,6 +116,11 @@ pub fn opcode(op: u8) -> &'static str {
         DUP => "dup",
         SWAP => "swap",
         SELECT => "select",
+
+        JMP => "jmp",
+        JMPI => "jmpi",
+        JZ => "jz",
+        JZI => "jiz",
 
         I32_LOAD => "i32.load",
         I32_LOAD_8 => "i32.load_8",

@@ -171,10 +171,10 @@ impl VM {
             opcode::END => {
                 return Ok(false);
             }
-            opcode::BR => {
+            opcode::BRI => {
                 *ip = self.read_i32(*ip) as usize;
             }
-            opcode::BRZ => {
+            opcode::BRZI => {
                 let is_zero = self.pop_i32() == 0;
                 let addr = self.read_i32(*ip) as usize;
                 if is_zero {
@@ -183,14 +183,37 @@ impl VM {
                     *ip += 4;
                 }
             }
-            opcode::JMP => {
+            opcode::BR => {
                 *ip = self.pop_i32() as usize;
             }
-            opcode::JZ => {
+            opcode::BRZ => {
                 let is_zero = self.pop_i32() == 0;
                 let addr = self.pop_i32() as usize;
                 if is_zero {
                     *ip = addr;
+                }
+            }
+            opcode::JMP => {
+                let offset = self.pop_i32() as usize;
+                *ip += offset;
+            }
+            opcode::JZ => {
+                let is_zero = self.pop_i32() == 0;
+                let offset = self.pop_i32() as usize;
+                if is_zero {
+                    *ip += offset;
+                }
+            }
+            opcode::JMPI => {
+                *ip += self.read_i32(*ip) as usize;
+            }
+            opcode::JZI => {
+                let is_zero = self.pop_i32() == 0;
+                let offset = self.read_i32(*ip) as usize;
+                if is_zero {
+                    *ip += offset;
+                } else {
+                    *ip += 4;
                 }
             }
             opcode::RETURN => {
