@@ -1,4 +1,7 @@
-use crate::{opcode, pop_i32, push_i32, read_i16, read_i32, write_i16, write_i32};
+use crate::{
+    opcode,
+    pop_i32, push_i32, read_i16, read_i32, write_i16, write_i32,
+};
 use std::mem;
 
 pub type VmFn = &'static dyn Fn(&'_ mut VM);
@@ -410,6 +413,18 @@ impl VM {
                 let a = self.pop_i32();
                 let b = self.pop_i32();
                 self.push_i32(a.max(b));
+            }
+
+            opcode::INC => {
+                let a = self.pop_i32();
+                self.push_i32(a + 1);
+            }
+            opcode::DEC => {
+                let a = self.pop_i32();
+                self.push_i32(a - 1);
+            }
+            opcode::ZERO => {
+                self.push_i32(0);
             }
 
             _ => {

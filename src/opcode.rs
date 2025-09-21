@@ -85,6 +85,11 @@ op_code!(ROTR, 0x5f);
 op_code!(NOT, 0x60);
 op_code!(MIN, 0x61);
 op_code!(MAX, 0x62);
+
+op_code!(INC, 0x63);
+op_code!(DEC, 0x64);
+op_code!(ZERO, 0x65);
+
 // TODO: i64, f32, f64
 
 op_code!(NEXT, 0xff); // remove this
@@ -171,6 +176,11 @@ pub fn opcode(op: u8) -> &'static str {
         NOT => "i32.not",
         MIN => "i32.min",
         MAX => "i32.max",
+
+        INC => "i32.inc",
+        DEC => "i32.dec",
+        ZERO => "i32.zero",
+
         NEXT => ".next",
 
         _ => "???",
