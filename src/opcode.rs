@@ -97,8 +97,6 @@ op_code!(ZERO, 0x65);
 
 // TODO: i64, f32, f64
 
-op_code!(NEXT, 0xff); // remove this
-
 pub fn opcode(op: u8) -> &'static str {
     match op {
         UNREACHABLE => "unreachable",
@@ -190,8 +188,6 @@ pub fn opcode(op: u8) -> &'static str {
         INC => "i32.inc",
         DEC => "i32.dec",
         ZERO => "i32.zero",
-
-        NEXT => ".next",
 
         _ => "???",
     }
