@@ -1,7 +1,4 @@
-use crate::{
-    opcode,
-    pop_i32, push_i32, read_i16, read_i32, write_i16, write_i32,
-};
+use crate::{opcode, pop_i32, push_i32, read_i16, read_i32, write_i16, write_i32};
 use std::mem;
 
 pub type VmFn = &'static dyn Fn(&'_ mut VM);
@@ -57,9 +54,6 @@ impl VM {
 
     pub fn read(&self, from: usize, dst: &mut [u8]) {
         let n = dst.len();
-        // for i in 0..n {
-        //     dst[i] = self.memory[from + i];
-        // }
         dst[..n].copy_from_slice(&self.memory[from..(n + from)]);
     }
 
@@ -305,44 +299,45 @@ impl VM {
                 let b = self.pop_i32();
                 self.push_i32(if a != b { TRUE } else { FALSE });
             }
+            //  1 10 < true
             opcode::LT_S => {
-                let a = self.pop_i32();
                 let b = self.pop_i32();
+                let a = self.pop_i32();
                 self.push_i32(if a < b { TRUE } else { FALSE });
             }
             opcode::LT_U => {
-                let a = self.pop_i32() as u32;
                 let b = self.pop_i32() as u32;
+                let a = self.pop_i32() as u32;
                 self.push_i32(if a < b { TRUE } else { FALSE });
             }
             opcode::GT_S => {
-                let a = self.pop_i32();
                 let b = self.pop_i32();
+                let a = self.pop_i32();
                 self.push_i32(if a > b { TRUE } else { FALSE });
             }
             opcode::GT_U => {
-                let a = self.pop_i32() as u32;
                 let b = self.pop_i32() as u32;
+                let a = self.pop_i32() as u32;
                 self.push_i32(if a > b { TRUE } else { FALSE });
             }
             opcode::LE_S => {
-                let a = self.pop_i32();
                 let b = self.pop_i32();
+                let a = self.pop_i32();
                 self.push_i32(if a <= b { TRUE } else { FALSE });
             }
             opcode::LE_U => {
-                let a = self.pop_i32() as u32;
                 let b = self.pop_i32() as u32;
+                let a = self.pop_i32() as u32;
                 self.push_i32(if a <= b { TRUE } else { FALSE });
             }
             opcode::GE_S => {
-                let a = self.pop_i32();
                 let b = self.pop_i32();
+                let a = self.pop_i32();
                 self.push_i32(if a >= b { TRUE } else { FALSE });
             }
             opcode::GE_U => {
-                let a = self.pop_i32() as u32;
                 let b = self.pop_i32() as u32;
+                let a = self.pop_i32() as u32;
                 self.push_i32(if a >= b { TRUE } else { FALSE });
             }
             // TODO: I64 ops
